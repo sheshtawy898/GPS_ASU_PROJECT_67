@@ -8,6 +8,7 @@ double dLat;
 double dLon;
 double a;
 double c;
+int x;
     //GETTING LAT AND LON AFTER CONNECTING GPS//
  /*double latFromGPS{}
    double lonFromGPS{} */
