@@ -5,7 +5,7 @@ void LED(uint32_t distance) {
 		LCD_Cmd(0x01);
 		LCD_Cmd(0x80);
 		delay_ms(500);
-		sprintf(print, "The Distance: %d, distance);
+		sprintf(print, "   The Distance: %d, distance);
 		LCD_String(print);
 	}
 	else{
@@ -13,7 +13,7 @@ void LED(uint32_t distance) {
 				LCD_Cmd(0x01);
 		LCD_Cmd(0x80);
 		delay_ms(500);
-		sprintf(print, "The Distance: %d, distance);
+		sprintf(print, "   The Distance: %d, distance);
 		LCD_String(print);
 	}
 }
