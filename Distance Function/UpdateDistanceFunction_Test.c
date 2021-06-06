@@ -39,24 +39,27 @@ int x;
 
 
 int main(){
+    
+lat2=30.049785453996144; // Using Real Coordinates from Google maps instead of letting the user enter them
+lon2=31.385213143122954;
 
-printf("Enter Lat2 then lon2:\n" );  //to try to get the coordinates as if the gps module is connected
-scanf("%lf", &lat2);
-scanf("%lf", &lon2);
+
  dist_2p= distanceCoordinates(lat1, lon1 ,lat2, lon2);
 
  //while loop to exit when the distance exceeds 100 meters
 while (DISTANCE < 100){
     lat1=lat2;
     lon1=lon2;
-    printf("Enter Lat2 then lon2:\n" );
-    scanf("%lf", &lat2);
-    scanf("%lf", &lon2);
+    lat2=30.049715814599192;
+    lon2=31.3845695190232;
+
     dist_2p= distanceCoordinates(lat1, lon1 ,lat2, lon2);
     DISTANCE += dist_2p;
+    lat2=30.049675638000775;
+    lon2=31.384170348297996;
+    
 }
 
-printf("%lf", DISTANCE); //final distance
-
+x = ceil(DISTANCE);
 
 }
