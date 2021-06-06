@@ -1,5 +1,4 @@
 #include "stdint.h"
-#include "C:/Keil/UV4/tm4c123gh6pm.h"
 void SystemInit(){}
 void Inti()
 {
@@ -34,4 +33,5 @@ void Inti()
 	GPIO_PORTF_DEN_R =0x1F; 
 	GPIO_PORTF_AFSEL_R =0;
 	GPIO_PORTF_AMSEL_R =0;
+	
 }	
