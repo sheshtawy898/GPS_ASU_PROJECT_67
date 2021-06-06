@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include<math.h>
+#define PI 3.14159
 double lat1 =0 , lon1=0 , lat2=0 , lon2=0 ;
 double DISTANCE=0;
 double dist_2p;
+double dLat;
+double dLon;
+double a;
+double c;
     //GETTING LAT AND LON AFTER CONNECTING GPS//
  /*double latFromGPS{}
    double lonFromGPS{} */
@@ -18,16 +23,16 @@ double dist_2p;
 {
   double earthRadiusKm = 6371;
 
-  double dLat = degreesToRadians (lat2 - lat1);
-  double dLon = degreesToRadians (lon2 - lon1);
+   dLat = degreesToRadians (lat2 - lat1);
+   dLon = degreesToRadians (lon2 - lon1);
 
   lat1 = degreesToRadians (lat1);
   lat2 = degreesToRadians (lat2);
 
-  double a = sin (dLat / 2) * sin (dLat / 2) +
+   a = sin (dLat / 2) * sin (dLat / 2) +
     sin (dLon / 2) * sin (dLon / 2) * cos (lat1) *
     cos (lat2);
-  double c = 2 * atan2 (sqrt (a), sqrt (1 - a));
+   c = 2 * atan2 (sqrt (a), sqrt (1 - a));
   return earthRadiusKm * c*1000;
 }
 
