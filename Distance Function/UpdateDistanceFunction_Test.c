@@ -39,7 +39,7 @@ scanf("%lf", &lat2);
 scanf("%lf", &lon2);
  dist_2p= distanceCoordinates(lat1, lon1 ,lat2, lon2);
 
-
+ //while loop to exit when the distance exceeds 100 meters
 while (DISTANCE < 100){
     lat1=lat2;
     lon1=lon2;
@@ -50,7 +50,7 @@ while (DISTANCE < 100){
     DISTANCE += dist_2p;
 }
 
-printf("%lf", DISTANCE);
+printf("%lf", DISTANCE); //final distance
 
 
 }
