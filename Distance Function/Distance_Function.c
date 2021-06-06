@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<math.h>
+#include <math.h>
 
    // CONVERTING TO RADIANS //
  double degreesToRadians (double degrees)
