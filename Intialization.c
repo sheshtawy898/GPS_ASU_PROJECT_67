@@ -1,9 +1,9 @@
 #include "stdint.h"
 #include "C:/Keil/UV4/tm4c123gh6pm.h"
 void SystemInit(){}
-void intialization()
+void Inti()
 {
-	//enable the clock for all ports
+	//enable the clock for port A, port B,port F
   SYSCTL_RCGCGPIO_R |= 0x23 ;
 	while((SYSCTL_PRGPIO_R & 0X23)==0) ;
 	//initialization port A as digital outputs for the control of the LCD 
