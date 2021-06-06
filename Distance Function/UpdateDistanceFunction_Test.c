@@ -14,8 +14,8 @@ double c;
 
    // CONVERTING TO RADIANS //
  double degreesToRadians (double degrees)
-{ double pi =3.14;
-  return degrees * pi / 180;
+{ 
+  return degrees * PI / 180;
 }
 
    // GETTING DISTANCE BETWEEN TWO COORDINATES //
