@@ -14,7 +14,8 @@ void LCD_Cmd(unsigned char cmnd);
 #define RW 0x40 // PORTA BIT6 mask
 #define EN 0x80 // PORTA BIT7 mask
 /* Milli seconds delay function */
-void delay_ms(int n)  
+
+void delay_milli(int n)  
 {
  int i,j;
  for(i=0;i<n;i++)
@@ -22,7 +23,7 @@ void delay_ms(int n)
  {}
 }
 /* Micro seconds delay function */
-void delay_us(int n) 
+void delay_micro(int n) 
 {
  int i,j;
  for(i=0;i<n;i++)
@@ -41,45 +42,45 @@ void LCD_init(void)
  GPIO_PORTA_DEN_R  |=0xE0;            // PB5-PB7	
  GPIO_PORTA_AFSEL_R  &= ~(0xE0);      // Disable alternative function
  GPIO_PORTA_AMSEL_R  &=~(0xE0);	      // Disable analog for  PA5-PA7
- delay_ms(20);
+ delay_milli(20);
  LCD_Cmd(0x30);     
- delay_ms(20);
+ delay_milli(20);
 	LCD_Cmd(0x30);    
- delay_ms(20);
+ delay_milli(20);
 	LCD_Cmd(0x30);    
- delay_ms(20);
+ delay_milli(20);
  LCD_Cmd(0x38);     //Function_set_8bit
- delay_ms(50);
+ delay_milli(50);
  LCD_Cmd(0x06);     //moveCursorRight
- delay_ms(50);
+ delay_milli(50);
  LCD_Cmd(0x01);     //clear_display
- delay_ms(50);
+ delay_milli(50);
  LCD_Cmd(0x0F);     //cursorBlink 
- delay_ms(50);
+ delay_milli(50);
  
 }
 
  void LCD_Cmd(unsigned char command) 
 {   GPIO_PORTA_DATA_R &=~(0xE0) ;      
     GPIO_PORTB_DATA_R = command ;
-    delay_ms(1);
+    delay_milli(1);
     GPIO_PORTA_DATA_R |= EN ;  
-    delay_ms(1);              // Pulse on
+    delay_milli(1);              // Pulse on
     GPIO_PORTA_DATA_R = 0;    // Pulse off                                    
     if (command < 4)
-		delay_ms(2);              // command 1 and 2 needs up to 1.64ms 
+		delay_milli(2);              // command 1 and 2 needs up to 1.64ms 
 		else
-		delay_us(40);                                          
+		delay_micro(40);                                          
 } 
 
-void LCD_Write_Char(unsigned char data) 
+void LCD_Data(unsigned char data) 
 {
     GPIO_PORTA_DATA_R |=RS;
-		GPIO_PORTB_DATA_R =data;
+    GPIO_PORTB_DATA_R =data;
     GPIO_PORTA_DATA_R = EN | RS;  //Can be modified later
-    delay_ms(0);
+    delay_milli(0);
     GPIO_PORTA_DATA_R &= ~(0xE0);   //set down the pulse   //can be modified 
-    delay_ms(40);                                                            
+    delay_milli(40);                                                            
 }
 
 void LCD_String (char *str)  // Send string to LCD function
@@ -87,7 +88,7 @@ void LCD_String (char *str)  // Send string to LCD function
     for(i=0;str[i]!='\0';i++)  
     {
         LCD_Write_Char(str[i]);  
-        delay_ms(1);
+        delay_milli(1);
     }
 }
 
