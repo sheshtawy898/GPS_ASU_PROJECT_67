@@ -58,3 +58,88 @@ while (totalDistance <= 100) {
         }
         latval = atof(lat);
         longval = atof(lon);
+        
+        
+                 //COORDINATES CONVERSION//
+        double lat = latval;
+        double longi = longval;
+        int dd_lat, dd_longi;
+        double  mm_lat, total_lat, mm_longi, total_longi;
+        dd_lat = (lat / 100);
+        mm_lat = lat - (dd_lat * 100);
+        mm_lat = mm_lat / 60;
+        total_lat = dd_lat + mm_lat;
+        dd_longi = (longi / 100);
+        mm_longi = longi - (dd_longi * 100);
+        mm_longi = mm_longi / 60;
+        total_longi = dd_longi + mm_longi;
+
+                      //DISTANCE//
+
+            if (lat1 == 0 && lon1 == 0) {
+                lat1 = total_lat;
+                lon1 = total_longi;
+            }
+
+
+        double lat2 = total_lat; //readGps
+        double lon2 = total_longi;
+        double dis;
+        dis = distance(lat1, lon1, lat2, lon2);
+        totalDistance += dis;
+        lat1 = lat2;
+        lon1 = lon2;
+
+
+                // Calcultaing Distance Edited//
+long double degreesToRadians(long double degree) {
+
+    return degree * PI / 180;
+}
+
+int distance(long double lat1, long double lon1, long double lat2, long double lon2) {
+
+    long double lati1 = degreesToRadians(lat1);
+    long double long1 = degreesToRadians(lon1);
+    long double lati2 = degreesToRadians(lat2);
+    long double long2 = degreesToRadians(lon2);
+
+
+    long double dLat = lati2 - lati1;
+    long double dLon = long2 - long1;
+    double dis_part1 = (pow(sin(dLat / 2), 2)) + (pow(sin(dLon / 2), 2) * cos(lati1) * cos(lati2));
+    double earthRadiusKm = 6371;      // earthRadius of the earth in km
+    double distance = 2 * earthRadiusKm * asin(sqrt(dis_part1)) * 1000;  // distance in m
+    return distance;
+}
+
+
+void SendNumbers(double v) {
+    unsigned char letters[5];
+    int number = (int)v;
+    int c = 3;
+    int n = number;
+
+    int numberArray[3];
+    int num[3];
+
+    c = 0;
+    n = number;
+    while (n != 0)
+    {
+        numberArray[c] = n % 10;
+        n /= 10;
+        c++;
+    }
+    int i;
+    for (i = 0; i < 3; i++) {
+        num[i] = numberArray[2 - i];
+    }
+    int j;
+    for (j = 0; j < 3; j++) {
+        letters[j] = num[j] + '0';
+        LCD_Data(letters[j]);
+        delay_milli(1);
+    }
+
+}
