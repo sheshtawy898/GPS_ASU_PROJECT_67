@@ -1,0 +1,60 @@
+while (totalDistance <= 100) {
+        //delay_milli(1000);
+        for (x = 0; x < 650; x++) {
+            data[x] = UART1_read();
+            //delay_milli(1000);
+
+        }
+
+        for (y = 0; y < 645; y++) {
+            if (data[y] == msg[0] && data[y + 1] == msg[1] && data[y + 2] == msg[2] && data[y + 3] == msg[3] && data[y + 4] == msg[4] && data[y + 5] == msg[5]) {
+                firstIndex = y;
+                break;
+            }
+        }
+        for (y = (firstIndex + 1); y < 645; y++) {
+            if (data[y] == '$') {
+                lastIndex = (y - 1);
+                break;
+            }
+        }
+        z = firstIndex;
+        for (x = 0; x < (lastIndex - firstIndex + 1); x++) {
+            line[x] = data[z];
+            z++;
+        }
+
+        //--------------------
+        int s;
+        for (s = 0; s < (lastIndex - firstIndex + 1); s++) { //---------
+            if (line[s] == 'A' || line[s] == 'V') {
+                latFirstInd = s + 3;
+                break;
+            }
+        }
+        for (s = 0; s < (lastIndex - firstIndex + 1); s++) {
+            if (line[s] == 'N' || line[s] == 'S') {
+                longFirstInd = s + 3;
+                latLastInd = s - 3;
+                break;
+            }
+        }
+        for (s = 0; s < (lastIndex - firstIndex + 1); s++) {
+            if (line[s] == 'E' || line[s] == 'W') {
+                longLastInd = s - 3;
+                break;
+            }
+        }
+        int lt = 0;
+        for (s = latFirstInd; s < latLastInd + 1; s++) {
+            lat[lt] = line[s];
+            lt++;
+        }
+
+        int lg = 0;
+        for (s = longFirstInd; s < longLastInd + 1; s++) {
+            lon[lg] = line[s];
+            lg++;
+        }
+        latval = atof(lat);
+        longval = atof(lon);
