@@ -95,11 +95,68 @@ int main(){
 	 LCD_init();
 	 LCD_Cmd(clear_display);
 	 // WRITING IN THE FIRST ROW //
-	 LCD_Cmd(FirstRow); // Force cusor to begining of first row
-	 LCD_String("   GPS Team 67");
+	 //LCD_Cmd(FirstRow); // Force cusor to begining of first row
+	 //LCD_String("   GPS Team 67");
 	 //	WRITING IN THE SECOND ROW //
-	 delay_ms(50);
-	 LCD_Cmd(SecondRow); // Force cusor to begining of Second row             
-	 LCD_String(" Distance: 101 ");                                                  
-	 delay_ms(500);                                                           
+	 //delay_ms(50);
+	 //LCD_Cmd(SecondRow); // Force cusor to begining of Second row             
+	 //LCD_String(" Distance: 101 ");                                                  
+	 //delay_ms(500);  
+        LCD_Cmd(0x80);
+        delay_milli(500);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('G');
+        delay_milli(1);
+        LCD_Data('P');
+        delay_milli(1);
+        LCD_Data('S');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('T');
+        delay_milli(1);
+        LCD_Data('e');
+        delay_milli(1);
+        LCD_Data('a');
+        delay_milli(1);
+        LCD_Data('m');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('6');
+        delay_milli(1);
+        LCD_Data('7');
+        delay_milli(1);
+        delay_milli(50);
+        LCD_Cmd(0xC0);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('D');
+        delay_milli(1);
+        LCD_Data('i');
+        delay_milli(1);
+        LCD_Data('s');
+        delay_milli(1);
+        LCD_Data('t');
+        delay_milli(1);
+        LCD_Data('a');
+        delay_milli(1);
+        LCD_Data('n');
+        delay_milli(1);
+        LCD_Data('c');
+        delay_milli(1);
+        LCD_Data('e');
+        delay_milli(1);
+        LCD_Data('=');
+        delay_milli(1);
+        SendNumbers(totalDistance);
+        delay_milli(500);
+	LED(totalDistance); //LED turning on after 100 metres
 }
