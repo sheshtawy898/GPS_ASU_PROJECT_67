@@ -1,0 +1,162 @@
+#include "stdint.h"
+#include "C:/Users/Zezo/Desktop/KeilExamples/tm4c123gh6pm.h"
+void SystemInit(){};
+void LCD_Cmd(unsigned char cmnd);                
+//         LCD commands         //
+#define clear_display     0x01  
+#define moveCursorRight   0x06  
+#define cursorBlink       0x0F  
+#define Function_set_8bit 0x38  
+#define Function_8_bit    0x32  
+#define FirstRow          0x80  
+#define SecondRow         0xC0  
+#define RS 0x20 // PORTA BIT5 mask
+#define RW 0x40 // PORTA BIT6 mask
+#define EN 0x80 // PORTA BIT7 mask
+/* Milli seconds delay function */
+
+void delay_milli(int n)  
+{
+ int i,j;
+ for(i=0;i<n;i++)
+ for(j=0;j<3180;j++)
+ {}
+}
+/* Micro seconds delay function */
+void delay_micro(int n) 
+{
+ int i,j;
+ for(i=0;i<n;i++)
+ for(j=0;j<3;j++)
+ {}
+ } 
+void LCD_init(void)  
+{ 
+ SYSCTL_RCGCGPIO_R |=0X03;            // Enable Clock to GPIOB & GPIOA
+ while((SYSCTL_PRGPIO_R&0x03)==0);
+ GPIO_PORTB_DIR_R  |=0xFF;            // PB0-PB7
+ GPIO_PORTB_DEN_R  |=0xFF;            // PB0-PB7
+ GPIO_PORTB_AFSEL_R  &=0x00;          // Disable alternative function 
+ GPIO_PORTB_AMSEL_R  &=0x00;          // Disable analog for  PB0-PB7
+ GPIO_PORTA_DIR_R  |=0xE0;            // PA5-PB7 
+ GPIO_PORTA_DEN_R  |=0xE0;            // PB5-PB7	
+ GPIO_PORTA_AFSEL_R  &= ~(0xE0);      // Disable alternative function
+ GPIO_PORTA_AMSEL_R  &=~(0xE0);	      // Disable analog for  PA5-PA7
+ delay_milli(20);
+ LCD_Cmd(0x30);     
+ delay_milli(20);
+	LCD_Cmd(0x30);    
+ delay_milli(20);
+	LCD_Cmd(0x30);    
+ delay_milli(20);
+ LCD_Cmd(0x38);     //Function_set_8bit
+ delay_milli(50);
+ LCD_Cmd(0x06);     //moveCursorRight
+ delay_milli(50);
+ LCD_Cmd(0x01);     //clear_display
+ delay_milli(50);
+ LCD_Cmd(0x0F);     //cursorBlink 
+ delay_milli(50);
+ 
+}
+
+ void LCD_Cmd(unsigned char command) 
+{   GPIO_PORTA_DATA_R &=~(0xE0) ;      
+    GPIO_PORTB_DATA_R = command ;
+    delay_milli(1);
+    GPIO_PORTA_DATA_R |= EN ;  
+    delay_milli(1);              // Pulse on
+    GPIO_PORTA_DATA_R = 0;    // Pulse off                                    
+    if (command < 4)
+		delay_milli(2);              // command 1 and 2 needs up to 1.64ms 
+		else
+		delay_micro(40);                                          
+} 
+
+void LCD_Data(unsigned char data) 
+{
+    GPIO_PORTA_DATA_R |=RS;
+    GPIO_PORTB_DATA_R =data;
+    GPIO_PORTA_DATA_R = EN | RS;  //Can be modified later
+    delay_milli(0);
+    GPIO_PORTA_DATA_R &= ~(0xE0);   //set down the pulse   //can be modified 
+    delay_milli(40);                                                            
+}
+
+void LCD_String (char *str)  // Send string to LCD function
+{ int i;
+    for(i=0;str[i]!='\0';i++)  
+    {
+        LCD_Write_Char(str[i]);  
+        delay_milli(1);
+    }
+}
+int main(){ 
+	 LCD_init();
+	 LCD_Cmd(clear_display);
+	 // WRITING IN THE FIRST ROW //
+	 //LCD_Cmd(FirstRow); // Force cusor to begining of first row
+	 //LCD_String("   GPS Team 67");
+	 //	WRITING IN THE SECOND ROW //
+	 //delay_ms(50);
+	 //LCD_Cmd(SecondRow); // Force cusor to begining of Second row             
+	 //LCD_String(" Distance: 101 ");                                                  
+	 //delay_ms(500);  
+        LCD_Cmd(0x80);
+        delay_milli(500);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('G');
+        delay_milli(1);
+        LCD_Data('P');
+        delay_milli(1);
+        LCD_Data('S');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('T');
+        delay_milli(1);
+        LCD_Data('e');
+        delay_milli(1);
+        LCD_Data('a');
+        delay_milli(1);
+        LCD_Data('m');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('6');
+        delay_milli(1);
+        LCD_Data('7');
+        delay_milli(1);
+        delay_milli(50);
+        LCD_Cmd(0xC0);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data(' ');
+        delay_milli(1);
+        LCD_Data('D');
+        delay_milli(1);
+        LCD_Data('i');
+        delay_milli(1);
+        LCD_Data('s');
+        delay_milli(1);
+        LCD_Data('t');
+        delay_milli(1);
+        LCD_Data('a');
+        delay_milli(1);
+        LCD_Data('n');
+        delay_milli(1);
+        LCD_Data('c');
+        delay_milli(1);
+        LCD_Data('e');
+        delay_milli(1);
+        LCD_Data('=');
+        delay_milli(1);
+        SendNumbers(totalDistance);
+        delay_milli(500);
+	LED(totalDistance); //LED turning on after 100 metres
+}
